@@ -1,0 +1,26 @@
+CREATE TABLE USUARIO(
+Id int identity(1,1) primary key,
+Email varchar(100) not null constraint u_usuario unique(Email),
+Contraseña varchar(100) not null
+)
+
+SELECT * FROM USUARIO
+GO
+CREATE PROCEDURE SP_LOGIN
+@EMAIL VARCHAR(100),
+@CONTRASEÑA VARCHAR(100)
+AS
+BEGIN
+SELECT 1 FROM USUARIO WHERE Email = @EMAIL AND Contraseña = @CONTRASEÑA
+END;
+GO
+CREATE PROCEDURE SP_REGISTRO
+@EMAIL VARCHAR(100),
+@CONTRASEÑA VARCHAR(100)
+AS
+BEGIN
+INSERT INTO USUARIO (Email,Contraseña) VALUES(@EMAIL,@CONTRASEÑA)
+END;
+
+exec SP_REGISTRO 'ro@gmail.com','123'
+exec SP_LOGIN 'ro@gmail.com','123'
