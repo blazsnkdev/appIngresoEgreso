@@ -16,12 +16,16 @@ builder.Services.AddScoped<IGastoDao, GastoDao>();
 builder.Services.AddScoped<IMiembroDao, MiembroDao>(); 
 builder.Services.AddScoped<IUsuarioDao, UsuarioDao>();
 builder.Services.AddScoped<IIngresoDao, IngresoDao>();
+builder.Services.AddScoped<IPagoDao, PagoDao>();
+builder.Services.AddScoped<IServicioDao, ServicioDao>();
 
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IMiembroService, MiembroService>();
 builder.Services.AddScoped<IGastoService, GastoService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IIngresoService, IngresoService>();
+builder.Services.AddScoped<IPagoServicioService, PagoServicioService>();
+builder.Services.AddScoped<IServicioService, ServicioService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
