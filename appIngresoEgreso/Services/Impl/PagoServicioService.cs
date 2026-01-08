@@ -11,11 +11,17 @@ namespace appIngresoEgreso.Services.Impl
         {
             _pagoDao = pagoDao;
         }
-        public bool RealizarPagoServicio(PagarServicioViewModel viewModel)
+        public (bool,string) RealizarPagoServicio(PagarServicioViewModel viewModel)
         {
-            if(viewModel.Monto <= 0)
+            var pagosExistentes = _pagoDao.GetAll();
+            var existe = pagosExistentes.Any(x => x.PeriodoAnio == viewModel.Anio && x.PeriodoMes == viewModel.Mes && x.IdServicio == viewModel.IdServicio);//NOTE: para no repetir pagos en el mismo mes y anio
+            if (existe)
             {
-                return false;
+                return (false, $"Ya hay un pago registrado para este servicio en el mes {viewModel.Mes} y año {viewModel.Anio}");
+            }
+            if (viewModel.Monto <= 0)
+            {
+                return (false, "Ya existe un pago para el mismo mes y año.");
             }
             var pago = new PagoServicio()
             {
@@ -27,7 +33,7 @@ namespace appIngresoEgreso.Services.Impl
                 PeriodoAnio = viewModel.Anio,
                 EstadoPago = Enums.EstadoPagoServicio.PAGADO
             };
-            return _pagoDao.PagarServicio(pago);
+            return _pagoDao.PagarServicio(pago) ? (true, "Pago del servicio realizado con éxito.") : (false, "Error al realizar el pago.");
         }
     }
 }

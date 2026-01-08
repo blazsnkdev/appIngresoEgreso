@@ -35,10 +35,12 @@ namespace appIngresoEgreso.Controllers
                 return View(viewModel);
             }
             var result = _pagoServicioService.RealizarPagoServicio(viewModel);
-            if(result)
+            if(result.Item1)
             {
-                return RedirectToAction("Index", "Home");
+                TempData["Mensaje"] = result.Item2;
+                return RedirectToAction("Index", "Dashboard");
             }
+            ViewBag.mensaje = result.Item2;
             CargarServicioSelectList();
             return View(viewModel); 
         }
