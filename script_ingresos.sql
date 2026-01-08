@@ -17,7 +17,6 @@ begin tran;
 begin try
         INSERT INTO Ingreso (Monto, FechaIngreso, IdMiembroFamilia)
         VALUES (@monto, GETDATE(), @idMiembro);
-		123456789101112131415161718190212223242526272829
         UPDATE MiembrosFamilia
         SET MontoTotal = MontoTotal + @monto
         WHERE IdMiembro = @idMiembro;
@@ -29,6 +28,9 @@ throw;
 end catch
 end;
 go
+
+alter table MiembrosFamilia add MontoTotal decimal(10,2)
+alter table Ingreso add FechaIngreso datetime
 select * from ingreso
 select * from miembrosFamilia
 exec sp_nuevo_ingreso 200,1

@@ -9,7 +9,7 @@ namespace appIngresoEgreso.Dao.Impl
         private readonly string _cadenaConexion;
         public DashboardDao(IConfiguration cfg)
         {
-            _cadenaConexion = cfg.GetConnectionString("cn1")!;
+            _cadenaConexion = cfg.GetConnectionString("cn1") ?? throw new ArgumentNullException("Connection string 'cn1' not found.");
         }
 
         public decimal? GetMontoGastosPorCategoriaYMes(int idCategoria, int numMes)
@@ -47,10 +47,17 @@ namespace appIngresoEgreso.Dao.Impl
                     {
                         if (dr.Read())
                         {
-                            int index = dr.GetOrdinal("totalmes");
-                            if (!dr.IsDBNull(index))
+                            try
                             {
-                                monto = dr.GetDecimal(index);
+                                int index = dr.GetOrdinal("totalmes");
+                                if (!dr.IsDBNull(index))
+                                {
+                                    monto = dr.GetDecimal(index);
+                                }
+                            }
+                            catch
+                            {
+                                monto = null;
                             }
                         }
                     }

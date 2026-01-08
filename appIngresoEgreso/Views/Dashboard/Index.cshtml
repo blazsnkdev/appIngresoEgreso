@@ -3,6 +3,10 @@
 }
 
 <h2 class="mb-4 text-center">Panel Informátivo Gastos y Pago de Servicios por el mes</h2>
+@if (TempData["Mensaje"] != null)
+{
+    <div>@TempData["Mensaje"]</div>
+}
 
 <div style="width: 500px; margin: auto;">
     <canvas id="chartGastosServicios"></canvas>
@@ -18,11 +22,8 @@
                 .then(data => {
                     const gastos = data.gasto ?? 0;
                     const servicios = data.servicio ?? 0;
-
-                    // 📈 Calculamos el valor máximo dinámicamente
                     const maxValor = Math.max(gastos, servicios);
                     const maxEscala = Math.ceil(maxValor / 100) * 100 + 100;
-                    // Ejemplo: si max = 1345 → escala = 1400 + 100 = 1500
 
                     const ctx = document.getElementById('chartGastosServicios').getContext('2d');
                     new Chart(ctx, {

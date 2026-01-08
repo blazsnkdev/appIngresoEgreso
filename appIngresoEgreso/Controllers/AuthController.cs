@@ -1,6 +1,7 @@
 ﻿using appIngresoEgreso.Models.ViewModels;
 using appIngresoEgreso.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace appIngresoEgreso.Controllers
 {
@@ -14,7 +15,7 @@ namespace appIngresoEgreso.Controllers
         public IActionResult Login() => View(new LoginViewModel());
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel viewModel)
+        public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -27,7 +28,8 @@ namespace appIngresoEgreso.Controllers
                 ModelState.AddModelError(string.Empty, "El usuario no existe");
                 return View(viewModel);
             }
-            return RedirectToAction("Index","Dashboard");
+            await _authService.SignInAsync(HttpContext, viewModel);//NOTE: esto guarda el claim
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }
