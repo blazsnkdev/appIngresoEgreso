@@ -1,10 +1,12 @@
 ﻿using appIngresoEgreso.Models.ViewModels;
 using appIngresoEgreso.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace appIngresoEgreso.Controllers
 {
+    [Authorize]
     public class IngresoController : Controller
     {
         private readonly IIngresoService _ingresoServiec;

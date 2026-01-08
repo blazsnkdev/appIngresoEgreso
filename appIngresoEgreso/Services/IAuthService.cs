@@ -6,5 +6,6 @@ namespace appIngresoEgreso.Services
     {
         //comentario XD
         bool Login(LoginViewModel viewModel);
+        Task SignInAsync(HttpContext httpContext, LoginViewModel viewModel);
     }
 }

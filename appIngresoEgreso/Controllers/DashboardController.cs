@@ -1,8 +1,10 @@
 ﻿using appIngresoEgreso.Dao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace appIngresoEgreso.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IDahsboardDao _dahsboardDao;

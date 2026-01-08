@@ -1,9 +1,11 @@
 ﻿using appIngresoEgreso.Models.ViewModels;
 using appIngresoEgreso.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace appIngresoEgreso.Controllers
 {
+    [Authorize]
     public class CategoriaController: Controller
     {
         private readonly ICategoriaService _categoriaService;

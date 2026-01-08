@@ -3,6 +3,7 @@ using appIngresoEgreso.Dao.Impl;
 using appIngresoEgreso.Models;
 using appIngresoEgreso.Services;
 using appIngresoEgreso.Services.Impl;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,15 @@ builder.Services.AddScoped<IMiembroService, MiembroService>();
 builder.Services.AddScoped<IGastoService, GastoService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IIngresoService, IngresoService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Configuración del pipeline de solicitud HTTP
@@ -37,6 +47,8 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Login}/{id?}");

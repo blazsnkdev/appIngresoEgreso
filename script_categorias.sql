@@ -258,10 +258,6 @@ set nocount on;
 select * from MiembrosFamilia;
 end
 go
-
-
-
-
 exec sp_listar_miembros
 use db_gastos
 select * from gastos
