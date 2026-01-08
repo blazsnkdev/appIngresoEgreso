@@ -1,0 +1,18 @@
+﻿@model appIngresoEgreso.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="text-center">Iniciar Sesion</h1>
+<form asp-action="Login" method="post">
+    @Html.AntiForgeryToken()
+    <label>Correo Electronico: </label>
+    <input type="email" asp-for="EmailInput" value="" />
+    <br />
+    <label>Password: </label>
+    <input type="password" asp-for="PasswordInput" value="" />
+    <br />
+    <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2 class="mb-4 text-center">Panel Informátivo Gastos y Pago de Servicios por el mes</h2>
+
+<div style="width: 500px; margin: auto;">
+    <canvas id="chartGastosServicios"></canvas>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/Dashboard/GetGastosYServiciosPorMes')
+                .then(res => res.json())
+                .then(data => {
+                    const gastos = data.gasto ?? 0;
+                    const servicios = data.servicio ?? 0;
+
+                    // 📈 Calculamos el valor máximo dinámicamente
+                    const maxValor = Math.max(gastos, servicios);
+                    const maxEscala = Math.ceil(maxValor / 100) * 100 + 100;
+                    // Ejemplo: si max = 1345 → escala = 1400 + 100 = 1500
+
+                    const ctx = document.getElementById('chartGastosServicios').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Gastos', 'Servicios'],
+                            datasets: [{
+                                label: 'Total del mes actual (S/.)',
+                                data: [gastos, servicios],
+                                backgroundColor: ['#ff4d4d', '#4d79ff']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { display: true },
+                                title: {
+                                    display: true,
+                                    text: 'Totales por mes actual'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    suggestedMax: maxEscala, 
+                                    ticks: {
+                                        stepSize: maxEscala / 5 
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error("Error cargando datos del dashboard:", err));
+        });
+    </script>
+}
