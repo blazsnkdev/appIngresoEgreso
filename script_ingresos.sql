@@ -18,7 +18,7 @@ begin try
         INSERT INTO Ingreso (Monto, FechaIngreso, IdMiembroFamilia)
         VALUES (@monto, GETDATE(), @idMiembro);
         UPDATE MiembrosFamilia
-        SET MontoTotal = MontoTotal + @monto
+        set MontoTotal = isnull(MontoTotal,0) +@monto
         WHERE IdMiembro = @idMiembro;
 commit tran;
 end try

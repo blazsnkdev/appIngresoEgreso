@@ -19,11 +19,13 @@ namespace appIngresoEgreso.Services.Impl
             {
                 return "Debe Ingresar un monto positivo";
             }
-            var ingreso = new Ingreso();
-            ingreso.Monto = viewModel.Monto;
-            ingreso.IdMiembroFamilia = viewModel.IdMiembroFamilia;
-            _ingresoDao.exec_sp_nuevo_ingreso(ingreso);
-            return "Registrado!";
+            var ingreso = new Ingreso()
+            {
+                Monto=viewModel.Monto,
+                IdMiembroFamilia=viewModel.IdMiembroFamilia
+            };
+            bool resultado = _ingresoDao.exec_sp_nuevo_ingreso(ingreso);
+            return resultado is true ? "Registrado correctamente!" : "Error al registrar";
         }
     }
 }

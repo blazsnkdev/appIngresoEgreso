@@ -12,6 +12,18 @@ namespace appIngresoEgreso.Services.Impl
             _miembroDao = miembroDao;
         }
 
+        public List<MiembroFamiliaInfoViewModel> GetFamiliaInfoList()
+        {
+            var list = _miembroDao.GetInfoMiembrosAll();
+            return list.Select(x => new MiembroFamiliaInfoViewModel()
+            {
+                Id = x.IdMiembro,
+                Nombre = x.Nombre,
+                Rol = x.Rol.ToString(),
+                Monto = x.MontoTotal
+            }).ToList();
+        }
+
         public List<MiembroSelectListViewModel> SelectList()
         {
             var miembros = _miembroDao.GetAll();

@@ -24,15 +24,14 @@ namespace appIngresoEgreso.Dao.Impl
                 monto.Value = ingreso.Monto;
                 cmd.Parameters.Add("@idMiembro", System.Data.SqlDbType.Int).Value = ingreso.IdMiembroFamilia;
                 cn.Open();
-                int fa = cmd.ExecuteNonQuery();
-                return fa > 0;
+                var s = cmd.ExecuteScalar();
+                return s is null;
             }
             catch (SqlException ex)
             {
                 Console.WriteLine("Error sql: "+ex.Message);
                 return false;
             }
-            
         }
     }
 }

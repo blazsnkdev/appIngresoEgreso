@@ -5,5 +5,6 @@ namespace appIngresoEgreso.Services
     public interface IMiembroService
     {
         List<MiembroSelectListViewModel> SelectList();
+        List<MiembroFamiliaInfoViewModel> GetFamiliaInfoList();
     }
 }

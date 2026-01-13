@@ -6,5 +6,6 @@ namespace appIngresoEgreso.Dao
     {
         IEnumerable<Miembro> GetAll();
         IEnumerable<Miembro> GetAllIds();
+        IEnumerable<Miembro> GetInfoMiembrosAll();
     }
 }
